@@ -2,8 +2,8 @@
 
 BEGIN { FS = "\n"; RS = "" }
 
-# Common shell symbols to HTML
 {
+	# Common shell symbols to HTML
 	# Two backslashes for nawk(1) and OpenBSD awk(1)
 	gsub(/\&/,"\\&amp;")
 	gsub(/</,"\\&lt;")
@@ -15,30 +15,39 @@ BEGIN { FS = "\n"; RS = "" }
 	match($0,":+")
 	cnt = RLENGTH
 	gsub(/^[\t ]*:+[\t ]*|[\t ]*:+[\t ]*$/,"")
+	anc = tolower($0)
+	gsub(/ +/,"-",anc)
 	# length($0) would also work
 	if (cnt <= 6 && $0 != "") {
-		printf("<h%s>%s</h%s>\n", cnt, $0, cnt)
+		printf("<h%d id=\"%s\">%s</h%d>\n", cnt, anc, $0, cnt)
 	}
 	next
 }
 
 # Paragraph
-/^[A-Za-z0-9_(]+/ {
-	printf("<p>%s</p>\n\n", $0)
+/^[A-Za-z0-9_("]+/ {
+	printf("<p>")
+	for (p=1; p<NF; p++) {
+		if ($p ~ / +$/) {
+			gsub(/ +$/,"",$p)
+			printf("%s<br>\n", $p)
+		} else {
+			printf("%s\n", $p)
+		}
+	}
+	printf("%s</p>\n", $p)
 	next
 }
 
 # Code
-/^====/ {
-	if (NF > 2 && $NF == "====") {
-		gsub(/^[\t ]*====[\t ]*\n|\n[\t ]*====[\t ]*$/,"")
+/^====+/ {
+	if (NF > 2 && $NF ~ /====+/) {
+		gsub(/^[\t ]*====+[\t ]*\n|\n[\t ]*====+[\t ]*$/,"")
 		printf("<pre><code>")
 		for (c=1; c<NF; c++) {
 			gsub(/^ +$/,"",$c)
 			printf("%s\n", $c)
 		}
-		# Solve "space" bug! Less crado (gsub).
-		gsub(/^ +/,"",$NF)
 		printf("%s</code></pre>\n", $NF)
 	}
 	next
@@ -69,7 +78,7 @@ BEGIN { FS = "\n"; RS = "" }
 			num = substr($u,RSTART,RLENGTH)
 			url = substr($u,RSTART+RLENGTH+1)
 			if (length(url) >= 60) {
-				printf("\t<li>%s <a href=\"%s\">%.60s...</a></li>\n", num, url, url)
+				printf("\t<li>%s <a href=\"%s\">%.60s…</a></li>\n", num, url, url)
 			} else {
 				printf("\t<li>%s <a href=\"%s\">%s</a></li>\n", num, url, url)
 			}
