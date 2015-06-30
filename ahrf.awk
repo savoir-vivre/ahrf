@@ -19,7 +19,7 @@ BEGIN { FS = "\n"; RS = "" }
 	gsub(/ +/,"-",anc)
 	# length($0) would also work
 	if (cnt <= 6 && $0 != "") {
-		printf("<h%d id=\"%s\">%s</h%d>\n", cnt, anc, $0, cnt)
+		printf("<h%d id=\"%s-%s\">%s</h%d>\n", cnt, anc, n_id++, $0, cnt)
 	}
 	next
 }
