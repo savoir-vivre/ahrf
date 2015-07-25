@@ -69,7 +69,7 @@ BEGIN { FS = "\n"; RS = "" }
 }
 
 # End links
-/^[\t ]*\[[01]/ {
+/^[\t ]*\[[0-9]/ {
 	printf("<ul>\n")
 	for (u=1; u<=NF; u++) {
 		gsub(/^[\t ]*/,"",$u)
