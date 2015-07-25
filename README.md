@@ -90,6 +90,7 @@ Paragraphs can start by:
 * `A-Z`: All letters uppercase
 * `a-z`: All letters lowercase
 * `_`, `(`, `"`
+* and almost anything else a paragraph usually starts with
 
 #### Code block: `<pre><code></code></pre>`
 
@@ -121,6 +122,19 @@ ls /usr/local/etc/rc.d/
 
 ```
 <pre><code>ls /usr/local/etc/rc.d/</code></pre>
+```
+#### Quote: `<div id=quote></div>`
+
+Quotes work like code blocks, only they must start with 4 `-` at
+least.
+
+```
+----
+"Language matters. Discourse matters. Culture matters. There is an
+important sense in which the only thing, that doesn't seem to matter
+anymore is matter." Karen Barad - Agential Realism (to matter - von
+Bedeutung sein / matter - Materie)
+----
 ```
 
 #### Unordered list: `<ul><li></li></ul>`

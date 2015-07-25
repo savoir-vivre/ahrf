@@ -19,13 +19,27 @@ BEGIN { FS = "\n"; RS = "" }
 	gsub(/ +/,"-",anc)
 	# length($0) would also work
 	if (cnt <= 6 && $0 != "") {
-		printf("<h%d id=\"%s\">%s</h%d>\n", cnt, anc, $0, cnt)
+		printf("<h%d id=\"%s-%s\">%s</h%d>\n", cnt, anc, n_id++, $0, cnt)
+	}
+	next
+}
+
+# Quote
+/^----+/ {
+	if (NF > 2 && $NF ~ /----+/) {
+		gsub(/^[\t ]*----+[\t ]*\n|\n[\t ]*----+[\t ]*$/,"")
+		printf("<div class=quote>")
+		for (c=1; c<NF; c++) {
+			gsub(/^ +$/,"",$c)
+			printf("%s\n", $c)
+		}
+		printf("%s</div>\n", $NF)
 	}
 	next
 }
 
 # Paragraph
-/^[A-Za-z0-9_("]+/ {
+/^[A-Za-z0-9_("{}/„\.\$\'\-\+]+/ {
 	printf("<p>")
 	for (p=1; p<NF; p++) {
 		if ($p ~ / +$/) {
@@ -78,9 +92,9 @@ BEGIN { FS = "\n"; RS = "" }
 			num = substr($u,RSTART,RLENGTH)
 			url = substr($u,RSTART+RLENGTH+1)
 			if (length(url) >= 60) {
-				printf("\t<li>%s <a href=\"%s\">%.60s…</a></li>\n", num, url, url)
+				printf("\t<li>%s <a href=\"%s\" target=\"_blank\">%.60s…</a></li>\n", num, url, url)
 			} else {
-				printf("\t<li>%s <a href=\"%s\">%s</a></li>\n", num, url, url)
+				printf("\t<li>%s <a href=\"%s\" target=\"_blank\">%s</a></li>\n", num, url, url)
 			}
 		}
 	}
