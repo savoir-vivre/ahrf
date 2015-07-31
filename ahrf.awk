@@ -69,9 +69,9 @@ BEGIN { FS = "\n"; RS = "" }
 
 # horizontal Ruler
 /^\|----+/ {
-  gsub(/^[\t ]*\|----+[\t ]*\n/,"")
-  printf("<hr>")
-  next
+	gsub(/^[\t ]*\|----+[\t ]*\n/,"")
+	printf("<hr>")
+	next
 }
 
 # List
