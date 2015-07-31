@@ -67,6 +67,13 @@ BEGIN { FS = "\n"; RS = "" }
 	next
 }
 
+# horizontal Ruler
+/^\|----+/ {
+	gsub(/^[\t ]*\|----+[\t ]*\n/,"")
+	printf("<hr>")
+	next
+}
+
 # List
 /^[\t ]*\* +/ {
 	printf("<ul>\n")
@@ -83,8 +90,8 @@ BEGIN { FS = "\n"; RS = "" }
 }
 
 # End links
-/^[\t ]*\[[0-9]/ {
-	printf("<ul>\n")
+/^[\t ]*\[[01]*/ {
+	printf("<div id=endlinks>\n<ul>\n")
 	for (u=1; u<=NF; u++) {
 		gsub(/^[\t ]*/,"",$u)
 		if (match($u,"\\[[0-9]+\\]")) {
@@ -98,6 +105,6 @@ BEGIN { FS = "\n"; RS = "" }
 			}
 		}
 	}
-	printf("</ul>\n")
+	printf("</ul>\n</div>\n")
 	next
 }
