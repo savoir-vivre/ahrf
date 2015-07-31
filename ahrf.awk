@@ -91,7 +91,7 @@ BEGIN { FS = "\n"; RS = "" }
 
 # End links
 /^[\t ]*\[[01]*/ {
-	printf("<ul>\n")
+	printf("<div id=endlinks>\n<ul>\n")
 	for (u=1; u<=NF; u++) {
 		gsub(/^[\t ]*/,"",$u)
 		if (match($u,"\\[[0-9]+\\]")) {
@@ -105,6 +105,6 @@ BEGIN { FS = "\n"; RS = "" }
 			}
 		}
 	}
-	printf("</ul>\n")
+	printf("</ul>\n</div>\n")
 	next
 }
