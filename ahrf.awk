@@ -38,6 +38,13 @@ BEGIN { FS = "\n"; RS = "" }
 	next
 }
 
+# Horizontal Ruler
+/^-[\t ]-[\t ]-+/ {
+	gsub(/^[\t ]*-[\t ]-[\t ]-[\t ]*\n/,"")
+	printf("<hr>")
+	next
+}
+
 # Paragraph
 /^[A-Za-z0-9_("{}/„\.\$\'\-\+]+/ {
 	printf("<p>")
@@ -64,13 +71,6 @@ BEGIN { FS = "\n"; RS = "" }
 		}
 		printf("%s</code></pre>\n", $NF)
 	}
-	next
-}
-
-# horizontal Ruler
-/^\|----+/ {
-	gsub(/^[\t ]*\|----+[\t ]*\n/,"")
-	printf("<hr>")
 	next
 }
 
