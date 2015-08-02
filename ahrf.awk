@@ -90,7 +90,7 @@ BEGIN { FS = "\n"; RS = "" }
 }
 
 # End links
-/^[\t ]*\[[01]*/ {
+/^[\t ]*\[[01]/ {
 	printf("<div id=endlinks>\n<ul>\n")
 	for (u=1; u<=NF; u++) {
 		gsub(/^[\t ]*/,"",$u)
