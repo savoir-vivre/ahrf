@@ -81,7 +81,7 @@ function italic_mf(){
 }
 
 # Paragraph
-/^[A-Za-z0-9_("{}\/„\.\$\'\-\+öäüÖÄÜ]+/ {
+/^[A-Za-z0-9_("{}\/„\.\$\'\-\+öäüÖÄÜ→]+/ {
 	italic()
 	italic_mf()
 	printf("<p>")
