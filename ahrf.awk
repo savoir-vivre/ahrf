@@ -45,9 +45,9 @@ BEGIN { FS = "\n"; RS = "" }
 }
 
 # Horizontal Ruler
-/^-[\t ]-[\t ]-+/ {
-	gsub(/^[\t ]*-[\t ]-[\t ]-[\t ]*\n/,"")
-	printf("<hr>")
+/^-[\t ]-([\t ]-)+/ {
+	gsub(/^[\t ]*-[\t ]-([\t ]-)+/,"")
+	printf("<hr>\n")
 	next
 }
 
