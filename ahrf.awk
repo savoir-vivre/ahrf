@@ -67,7 +67,7 @@ function italic(){
 			gsub(/\/$/,"</i>",$i)
 		}
 	}
-	#FS = "\n"
+	FS = "\n"
 }
 function italic_mf(){
 	FS = "[\t ]"
@@ -84,7 +84,7 @@ function italic_mf(){
 			gsub(/\/\/$/,"</i>",$i)
 		}
 	}
-	#FS = "\n"
+	FS = "\n"
 }
 
 # Paragraph
