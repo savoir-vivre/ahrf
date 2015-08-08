@@ -55,7 +55,7 @@ BEGIN { FS = "\n"; RS = "" }
 function italic(){
 	FS = "[\t ]"
 	for(i=1; i<=NF; i++) {
-		italy=match($i, /(^| )\/[^ ]+\/( |\.|\,|\?|\!|$)/)
+		italy=match($i, /(^| )\/[^\/( |$) ]+\/( |\.|\,|\?|\!|$)/)
 		if(italy) {
 			gsub(/[\t ]\//," <i>",$i)
 			gsub(/^\//,"<i>",$i)
@@ -70,21 +70,14 @@ function italic(){
 	FS = "\n"
 }
 function italic_mf(){
-	FS = "[\t ]"
-	for(i=1; i<=NF; i++) {
-		italy=match($i, /(^| )\/\/[^ \/]+|[^ \/]+\/\/( |\.|\,|\?|\!|$)/)
-		if(italy) {
-			gsub(/[\t ]\/\//," <i>")
-			gsub(/^\/\//,"<i>")
-			gsub(/\/\/[\t ]/,"</i> ")
-			gsub(/\/\/\./,"</i>.")
-			gsub(/\/\/\,/,"</i>,")
-			gsub(/\/\/\?/,"</i>?")
-			gsub(/\/\/\!/,"</i>!")
-			gsub(/\/\/$/,"</i>")
-		}
-	}
-	FS = "\n"
+	gsub(/[\t ]\/\//," <i>")
+	gsub(/^\/\//,"<i>")
+	gsub(/\/\/[\t ]/,"</i> ")
+	gsub(/\/\/\./,"</i>.")
+	gsub(/\/\/\,/,"</i>,")
+	gsub(/\/\/\?/,"</i>?")
+	gsub(/\/\/\!/,"</i>!")
+	gsub(/\/\/$/,"</i>")
 }
 
 # Paragraph
