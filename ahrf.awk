@@ -47,7 +47,7 @@ BEGIN { FS = "\n"; RS = "" }
 # Horizontal Ruler
 /^-[\t ]-([\t ]-)+/ {
 	gsub(/^[\t ]*-[\t ]-([\t ]-)+/,"")
-	printf("\n<hr>\n\n")
+	printf("<hr>\n")
 	next
 }
 
@@ -93,7 +93,7 @@ function italic_mf(){
 /^[A-Za-z0-9_("{}\/„\.\$\'\-\+öäüÖÄÜ→]+/ {
 	italic()
 	italic_mf()
-	printf("<p>\n")
+	printf("<p>")
 	for (p=1; p<NF; p++) {
 		if ($p ~ / +$/) {
 			gsub(/ +$/,"",$p)
@@ -102,7 +102,7 @@ function italic_mf(){
 			printf("%s\n", $p)
 		}
 	}
-	printf("%s\n</p>\n", $p)
+	printf("%s</p>\n", $p)
 	next
 }
 
