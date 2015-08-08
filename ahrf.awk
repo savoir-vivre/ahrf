@@ -51,8 +51,48 @@ BEGIN { FS = "\n"; RS = "" }
 	next
 }
 
+# Italic
+function italic(){
+	FS = "[\t ]"
+	for(i=1; i<=NF; i++) {
+		italy=match($i, /(^| )\/[^ \/][^ ]*[^ \/]\/( |\.|\,|\;|\?|\!|$)/)
+		if(italy) {
+			gsub(/[\t ]\//," <i>",$i)
+			gsub(/^\//,"<i>",$i)
+			gsub(/\/[\t ]/,"</i> ",$i)
+			gsub(/\/\./,"</i>.",$i)
+			gsub(/\/\,/,"</i>,",$i)
+			gsub(/\/\;/,"</i>;",$i)
+			gsub(/\/\?/,"</i>?",$i)
+			gsub(/\/\!/,"</i>!",$i)
+			gsub(/\/$/,"</i>",$i)
+		}
+	}
+	FS = "\n"
+}
+function italic_mf(){
+	FS = "[\t ]"
+	for(i=1; i<=NF; i++) {
+		italy=match($i, /(^| )\/\/[^ \/]+|[^ \/]+\/\/( |\.|\,|\;|\?|\!|$)/)
+		if(italy) {
+			gsub(/[\t ]\/\//," <i>",$i)
+			gsub(/^\/\//,"<i>",$i)
+			gsub(/\/\/[\t ]/,"</i> ",$i)
+			gsub(/\/\/\./,"</i>.",$i)
+			gsub(/\/\/\,/,"</i>,",$i)
+			gsub(/\/\/\;/,"</i>;",$i)
+			gsub(/\/\/\?/,"</i>?",$i)
+			gsub(/\/\/\!/,"</i>!",$i)
+			gsub(/\/\/$/,"</i>",$i)
+		}
+	}
+	FS = "\n"
+}
+
 # Paragraph
 /^[A-Za-z0-9_("{}\/„\.\$\'\-\+öäüÖÄÜ→]+/ {
+	italic()
+	italic_mf()
 	printf("<p>\n")
 	for (p=1; p<NF; p++) {
 		if ($p ~ / +$/) {
@@ -82,6 +122,8 @@ BEGIN { FS = "\n"; RS = "" }
 
 # List
 /^[\t ]*\* +/ {
+	italic()
+	italic_mf()
 	printf("<ul>\n")
 	for (l=1; l<=NF; l++) {
 		gsub(/^[\t ]*/,"",$l)
