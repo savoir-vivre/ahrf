@@ -307,7 +307,7 @@ because I "played" thousands of times with `markdown`.
 TODO
 ----
 
-- [ ] Blockquote?
+- [x] Blockquote
 
 Issues
 ------

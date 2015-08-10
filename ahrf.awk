@@ -34,12 +34,12 @@ BEGIN { FS = "\n"; RS = "" }
 /^----+/ {
 	if (NF > 2 && $NF ~ /----+/) {
 		gsub(/^[\t ]*----+[\t ]*\n|\n[\t ]*----+[\t ]*$/,"")
-		printf("<div class=quote>")
+		printf("<blockquote>")
 		for (c=1; c<NF; c++) {
 			gsub(/^ +$/,"",$c)
 			printf("%s\n", $c)
 		}
-		printf("%s</div>\n", $NF)
+		printf("%s</blockquote>\n", $NF)
 	}
 	next
 }
