@@ -92,6 +92,32 @@ Paragraphs can start by:
 * `_`, `(`, `"`
 * and almost anything else a paragraph usually starts with
 
+Italic and bold text is also supported. Just start and end
+a line in your paragraph with `/` or `*` respectively.
+Everything on that line will be italic/bold.
+For a combination of both, use `**`.
+
+```
+/Row hammer/
+(also written as
+*rowhammer*
+) is an
+**unintended**
+side effect in dynamic random-access memory (DRAM) that causes
+memory cells to leak their charges and interact electrically
+between themselves.
+```
+```
+<p><i>Row hammer</i>
+(also written as
+<b>rowhammer</b>
+) is an
+<b><i>unintended</i></b>
+side effect in dynamic random-access memory (DRAM) that causes
+memory cells to leak their charges and interact electrically
+between themselves.</p>
+```
+
 #### Code block: `<pre><code></code></pre>`
 
 Code blocks must start by 4 `=` at least.
@@ -175,8 +201,8 @@ item(s) will be ignored.
 
 #### Page links: `<ul><a></a></ul>`
 
-The "list" has to be started by `[0]` or `[1]`. If not, it won't be matched.
-
+The "list" has to be started by a number surrounded by brackets like
+`[0]`, `[1]`, `[5]` etc.
 ```
 [0] https://github.com/
 [1] http://netbsd.org/
@@ -192,6 +218,15 @@ The "list" has to be started by `[0]` or `[1]`. If not, it won't be matched.
 	<li>[666] <a href="http://www.libressl.org/">http://www.libressl.org/</a></li>
 </ul>
 ```
+
+#### Horizontal Lines `- - -`
+
+A horizontal line `<hr>` is done with at least three dashes with spaces
+in between.
+
+#### HTML snippets
+
+Every line starting with a `<` and containing a `>` later on will be concatenated without change. By that you can include snippets of HTML to include whatever else you need to include.
 
 #### Comments
 
@@ -272,7 +307,7 @@ because I "played" thousands of times with `markdown`.
 TODO
 ----
 
-- [ ] Blockquote?
+- [x] Blockquote
 
 Issues
 ------

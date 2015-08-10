@@ -2,6 +2,12 @@
 
 BEGIN { FS = "\n"; RS = "" }
 
+# Include HTML without change
+/^<[^<>]+>/ {
+	print
+	next
+}
+
 {
 	# Common shell symbols to HTML
 	# Two backslashes for nawk(1) and OpenBSD awk(1)
@@ -28,20 +34,38 @@ BEGIN { FS = "\n"; RS = "" }
 /^----+/ {
 	if (NF > 2 && $NF ~ /----+/) {
 		gsub(/^[\t ]*----+[\t ]*\n|\n[\t ]*----+[\t ]*$/,"")
-		printf("<div class=quote>")
+		printf("<blockquote>")
 		for (c=1; c<NF; c++) {
 			gsub(/^ +$/,"",$c)
 			printf("%s\n", $c)
 		}
-		printf("%s</div>\n", $NF)
+		printf("%s</blockquote>\n", $NF)
 	}
 	next
 }
 
+# Horizontal Ruler
+/^-[\t ]-([\t ]-)+/ {
+	gsub(/^[\t ]*-[\t ]-([\t ]-)+/,"")
+	printf("<hr>\n")
+	next
+}
+
 # Paragraph
-/^[A-Za-z0-9_("{}/„\.\$\'\-\+]+/ {
+/^[A-Za-z0-9_("{}\/„\.\,\$\'\-\+öäüÖÄÜ→]+/ {
 	printf("<p>")
-	for (p=1; p<NF; p++) {
+	for (p=1; p<=NF; p++) {
+		if ($p ~ /^\/.+\/$/) {
+			gsub(/^\//,"<i>",$p)
+			gsub(/\/$/,"</i>",$p)
+		} if ($p ~ /^\*[^*]+\*$/) {
+			gsub(/^\*/,"<b>",$p)
+			gsub(/\*$/,"</b>",$p)
+		} if ($p ~ /^\*\*.+\*\*$/) {
+			gsub(/^\*\*/,"<b><i>",$p)
+			gsub(/\*\*$/,"</i></b>",$p)
+		}
+	} for (p=1; p<NF; p++) {
 		if ($p ~ / +$/) {
 			gsub(/ +$/,"",$p)
 			printf("%s<br>\n", $p)
@@ -67,13 +91,6 @@ BEGIN { FS = "\n"; RS = "" }
 	next
 }
 
-# horizontal Ruler
-/^\|----+/ {
-	gsub(/^[\t ]*\|----+[\t ]*\n/,"")
-	printf("<hr>")
-	next
-}
-
 # List
 /^[\t ]*\* +/ {
 	printf("<ul>\n")
@@ -90,7 +107,7 @@ BEGIN { FS = "\n"; RS = "" }
 }
 
 # End links
-/^[\t ]*\[[01]*/ {
+/^[\t ]*\[[0-9]/ {
 	printf("<div id=endlinks>\n<ul>\n")
 	for (u=1; u<=NF; u++) {
 		gsub(/^[\t ]*/,"",$u)
