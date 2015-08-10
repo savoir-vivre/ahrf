@@ -224,6 +224,10 @@ The "list" has to be started by `[0]` or `[1]`. If not, it won't be matched.
 A horizontal line `<hr>` is done with at least three dashes with spaces
 in between.
 
+#### HTML snippets
+
+Every line starting with a `<` and containing a `>` later on will be concatenated without change. By that you can include snippets of HTML to include whatever else you need to include.
+
 #### Comments
 
 There is no specific regex for the comments. If the line doesn't "satisfy"
