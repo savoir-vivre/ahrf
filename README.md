@@ -201,8 +201,8 @@ item(s) will be ignored.
 
 #### Page links: `<ul><a></a></ul>`
 
-The "list" has to be started by `[0]` or `[1]`. If not, it won't be matched.
-
+The "list" has to be started by a number surrounded by brackets like
+`[0]`, `[1]`, `[5]` etc.
 ```
 [0] https://github.com/
 [1] http://netbsd.org/
