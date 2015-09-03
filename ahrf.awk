@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f
 
-BEGIN { FS = "\n"; RS = "" }
+BEGIN { FS = "\n"; RS = ""; n_id="0" }
 
 # Include HTML without change
 /^<[^<>]+>/ {
